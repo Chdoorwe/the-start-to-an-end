@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 safetyLogo.style.borderColor = '#ddd';
             }, 200);
 
-            if (clickCount >= 5) {
+            if (clickCount >= 2) {
                 clickCount = 0; // Reset to prevent double firing
                 triggerSystemError();
             }
