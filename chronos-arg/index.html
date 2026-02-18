@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecting to Chronos Network...</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .terminal {
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #0f0;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <p>> INITIALIZING SECURE CONNECTION...</p>
+        <p id="msg1" style="display:none">> VERIFYING BIOMETRICS...</p>
+        <p id="msg2" style="display:none">> IDENTITY CONFIRMED: RESIDENT #8940</p>
+        <p id="msg3" style="display:none">> WELCOME HOME.</p>
+        <p id="msg4" style="display:none">> REDIRECTING TO INTRANET...</p>
+        <span class="cursor"></span>
+    </div>
+
+    <script>
+        const delays = [1000, 2500, 4000, 5500];
+        const ids = ['msg1', 'msg2', 'msg3', 'msg4'];
+
+        ids.forEach((id, index) => {
+            setTimeout(() => {
+                document.getElementById(id).style.display = 'block';
+            }, delays[index]);
+        });
+
+        setTimeout(() => {
+            window.location.href = 'intranet/intranet.html';
+        }, 7000);
+    </script>
+</body>
+
+</html>

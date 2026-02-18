@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAINTENANCE UPLINK | CHRONOS</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            border: 2px solid #0f0;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 10px;
+        }
+
+        input {
+            background: #111;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px;
+            width: 80%;
+            margin: 20px 0;
+            font-family: inherit;
+            font-size: 1.2em;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background: #0a0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 5px;
+            font-size: 0.8em;
+        }
+
+        .close-btn:hover {
+            background: #0f0;
+            color: #000;
+        }
+
+        #error-msg {
+            color: red;
+            height: 1.5em;
+            /* reserve space */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <button class="close-btn" onclick="window.location.href='intranet.html'">[X] TERMINATE LINK</button>
+
+        <h2>MAINTENANCE UPLINK</h2>
+        <p>SECURE CONNECTION ESTABLISHED.</p>
+        <p>ENTER IDENTITY VERIFICATION:</p>
+
+        <input type="text" id="passcode" placeholder="ENTER BADGE ID" autofocus>
+        <br>
+        <button onclick="checkPass()">ACCESS</button>
+
+        <p id="error-msg"></p>
+    </div>
+
+    <script>
+        // Auto-focus input
+        const input = document.getElementById('passcode');
+        input.focus();
+
+        // Enter key support
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPass();
+        });
+
+        function checkPass() {
+            const val = input.value.trim().toUpperCase().replace(/-/g, '');
+            const msg = document.getElementById('error-msg');
+
+            // Passcode: A7-B2-C9 (from jobs.html)
+            if (val === 'A7B2C9') {
+                msg.style.color = '#0f0';
+                msg.innerText = "IDENTITY VERIFIED. REDIRECTING...";
+
+                setTimeout(() => {
+                    window.location.href = '../echo/echo.html';
+                }, 1500);
+            } else {
+                msg.style.color = 'red';
+                msg.innerText = "ACCESS DENIED: INCOMPATIBLE ID";
+                input.value = '';
+                input.focus();
+
+                // Shake effect (simple visual)
+                const container = document.querySelector('.container');
+                container.style.transform = 'translate(5px, 0)';
+                setTimeout(() => container.style.transform = 'translate(-5px, 0)', 50);
+                setTimeout(() => container.style.transform = 'translate(5px, 0)', 100);
+                setTimeout(() => container.style.transform = 'translate(0, 0)', 150);
+            }
+        }
+    </script>
+</body>
+
+</html>

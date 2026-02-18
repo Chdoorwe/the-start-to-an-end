@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHRONOS SYSTEMS | CORE</title>
+    <link rel="stylesheet" href="../assets/css/systems.css">
+    <script src="../assets/js/systems.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Puzzle 7: Login -->
+    <div id="login-modal" class="login-frame">
+        <h2>SYSTEM ACCESS</h2>
+        <p>ENTER DUAL-KEY AUTHENTICATION</p>
+        <input type="text" id="sys-user" placeholder="KEY PART 1 (ALPHA)">
+        <input type="text" id="sys-pass" placeholder="KEY PART 2 (OMEGA)">
+        <button onclick="attemptLogin()">AUTHENTICATE</button>
+    </div>
+
+    <!-- Main Control Panel -->
+    <div id="dashboard" style="display:none;" class="container">
+        <header style="border-bottom: 2px solid red; padding-bottom: 20px; margin-bottom: 20px;">
+            <h1>CHRONOS CORE CONTROL</h1>
+            <p>WARNING: RESTRICTED AREA. AUTHORIZED PERSONNEL ONLY.</p>
+        </header>
+
+        <div class="grid-container">
+            <!-- Puzzle 9: Database Search -->
+            <div class="module">
+                <h2>SUBJECT DATABASE</h2>
+                <p>Search via Subject ID #</p>
+                <input type="text" id="search-q" placeholder="ENTER ID (e.g., 42)">
+                <button onclick="searchDatabase()">QUERY</button>
+                <div id="search-res"></div>
+            </div>
+
+            <!-- Puzzle 8: Power Routing (Simplified) -->
+            <!-- Puzzle 8: Power Routing -->
+            <div class="module">
+                <h2>POWER GRID STATUS</h2>
+                <p>MAIN REACTOR: <span style="color:#0f0">ONLINE</span></p>
+                <div style="margin: 10px 0;">
+                    <button id="btn-backup" onclick="togglePower('backup')"
+                        style="width:100%; margin-bottom:5px; background:#330000; border:1px solid #ff3333;">ENABLE
+                        BACKUP GEN</button>
+                    <button id="btn-life" onclick="togglePower('lifeSupport')"
+                        style="width:100%; background:#ff3333; border:1px solid #ff3333;">DISABLE LIFE SUPPORT</button>
+                </div>
+
+                <hr style="border-color: #550000">
+
+                <p>DOOR HYDRAULICS: <span id="door-status" style="color:red">OFFLINE</span></p>
+
+                <div id="door-module"
+                    style="margin-top: 20px; border: 2px dashed red; padding: 10px; opacity: 0.5; transition: all 0.5s;">
+                    <h3>EMERGENCY DOOR RELEASE</h3>
+                    <div id="override-section" style="display:none;">
+                        <p>REQUIRES MANUAL OVERRIDE CODE</p>
+                        <input type="text" id="override-code" placeholder="ENTER OVERRIDE CODE">
+                        <button style="background: red; color: white; font-size: 1.2em; width: 100%;"
+                            onclick="executeOverride()">EXECUTE OPEN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="finale-overlay"></div>
+</body>
+
+</html>

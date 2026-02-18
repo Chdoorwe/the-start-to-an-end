@@ -1,0 +1,106 @@
+:root {
+    --primary-color: #0056b3;
+    --secondary-color: #f0f4f8;
+    --text-color: #333;
+    --warning-color: #d9534f;
+    --success-color: #5cb85c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-good { background-color: var(--success-color); }
+.status-bad { background-color: var(--warning-color); }
+
+/* Puzzle Elements */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hidden Maintenance Modal */
+#maintenance-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    color: #0f0;
+    padding: 2rem;
+    border: 2px solid #0f0;
+    z-index: 1000;
+    font-family: monospace;
+}
+
+.system-overlay {
+    background: rgba(0,0,0,0.8);
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 999;
+    display: none;
+}
+
+/* Glitch Animation */
+@keyframes glitch-anim {
+    0% { transform: translate(0) }
+    20% { transform: translate(-2px, 2px) }
+    40% { transform: translate(-2px, -2px) }
+    60% { transform: translate(2px, 2px) }
+    80% { transform: translate(2px, -2px) }
+    100% { transform: translate(0) }
+}
+
+.glitch-active {
+    animation: glitch-anim 0.3s infinite;
+    color: red;
+    font-weight: bold;
+}

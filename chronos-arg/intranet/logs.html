@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos Sanctuary | Security Logs</title>
+    <link rel="stylesheet" href="../assets/css/intranet.css">
+    <style>
+        .test-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .question {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background: #0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .options button:hover {
+            background: #004494;
+        }
+
+        #access-granted {
+            display: none;
+            border: 2px solid green;
+            padding: 15px;
+            margin-top: 20px;
+            background: #e6ffe6;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CHRONOS SANCTUARY</h1>
+        <nav>
+            <ul>
+                <li><a href="intranet.html">DASHBOARD</a></li>
+                <li><a href="jobs.html">ROSTER</a></li>
+                <li><a href="news.html">NEWS</a></li>
+                <li><a href="logs.html" class="active">LOGS</a></li>
+            </ul>
+        </nav>
+        <span>User: Resident #8940</span>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>RESTRICTED DATA ARCHIVE</h2>
+            <p><strong>SECURITY LEVEL: ORANGE</strong></p>
+            <p>To access the archive, you must verify your "Sanctuary Awareness". Answer correctly. Failure is logged.
+            </p>
+
+            <div class="test-container" id="quiz-box">
+                <!-- Q1 -->
+                <div class="question active" id="q1">
+                    <p><strong>QUERY 1:</strong> According to the Daily Menu, what is the assigned flavor for LUNCH?</p>
+                    <div class="options">
+                        <button onclick="fail()">A) Savory</button>
+                        <button onclick="next(1)">B) Green</button>
+                        <button onclick="fail()">C) Red</button>
+                        <button onclick="fail()">D) Texture</button>
+                    </div>
+                </div>
+
+                <!-- Q2 (Reference: Safety Logo color/jobs) -->
+                <div class="question" id="q2">
+                    <p><strong>QUERY 2:</strong> Complete the phrase: "Curiosity is dangerous. Compliance is _______."
+                    </p>
+                    <div class="options">
+                        <button onclick="fail()">A) Mandatory</button>
+                        <button onclick="fail()">B) Optional</button>
+                        <button onclick="next(2)">C) Safety</button>
+                        <button onclick="fail()">D) Forever</button>
+                    </div>
+                </div>
+
+                <!-- Q3 (Reference: Jobs) -->
+                <div class="question" id="q3">
+                    <p><strong>QUERY 3:</strong> Who is the current "Employee of the Century"?</p>
+                    <div class="options">
+                        <button onclick="fail()">A) Jane Doe (Clone 3)</button>
+                        <button onclick="next(3)">B) John Doe (Clone 4)</button>
+                        <button onclick="fail()">C) The Director</button>
+                        <button onclick="fail()">D) Subject 89</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="access-granted">
+                <h3>ACCESS GRANTED</h3>
+                <p>Welcome, Admin.</p>
+                <hr>
+                <h4>FILE: PROJECT CHIMERA (AUDIO LOG TRANSCRIPT)</h4>
+                <p><strong>Dr. V:</strong> "Subject 89 is showing resistance to standard conditioning. We need to
+                    increase the frequency."</p>
+                <p><strong>Technician:</strong> "To what level?"</p>
+                <p><strong>Dr. V:</strong> "Set the broadcast to <strong>880 Hz</strong>. It's the only thing that calms
+                    him down."</p>
+                <hr>
+                <h4>FILE: MAINTENANCE NOTE</h4>
+                <p>The <strong>Systems Core</strong> IP has been moved. Use the secure terminal in The Echo if you lost
+                    the link.</p>
+            </div>
+
+            <div id="failure-msg" style="display:none; color: red; margin-top: 20px;">
+                <h3>VERIFICATION FAILED</h3>
+                <p>Security Team dispatched to your location. Please remain seated.</p>
+                <button onclick="location.reload()">RETRY TERMINAL</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function next(qNum) {
+            document.getElementById('q' + qNum).classList.remove('active');
+            const nextQ = document.getElementById('q' + (qNum + 1));
+            if (nextQ) {
+                nextQ.classList.add('active');
+            } else {
+                // Success
+                document.getElementById('quiz-box').style.display = 'none';
+                document.getElementById('access-granted').style.display = 'block';
+            }
+        }
+
+        function fail() {
+            document.getElementById('quiz-box').style.display = 'none';
+            document.getElementById('failure-msg').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ECHO /// RESISTANCE ARCHIVE</title>
+    <link rel="stylesheet" href="../assets/css/echo.css">
+    <script src="../assets/js/echo.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>THE ECHO [CONNECTION: SECURE]</h1>
+        <p>They lie to you. The surface is alive. We are the proof.</p>
+        <p>Warning: Chronos Systems IP detected at <a href="../systems/systems.html"
+                style="color:red">../systems/systems.html</a></p>
+    </header>
+
+    <div class="container">
+
+        <!-- Puzzle 4: Frequency Tuner -->
+        <div class="tuner-control">
+            <h3>Intercepted Broadcasts</h3>
+            <p>Adjust frequency to match leaked Intranet reports...</p>
+            <input type="range" min="100" max="1500" value="100" id="freq-slider" oninput="checkFrequency(this.value)">
+            <p id="freq-display">100 Hz</p>
+            <p id="audio-output" style="font-family: monospace; color: #555;">Waiting for signal...</p>
+        </div>
+
+        <!-- Puzzle 6: Image Steganography -->
+        <div class="control-panel">
+            <h3>Corrupted Bio-Scan</h3>
+            <p>Recover the admin pass segment hidden in the noise.</p>
+            <!-- Canvas for noise puzzle -->
+            <div style="padding: 10px; display: inline-block; border: 1px solid #4cd964;">
+                <canvas id="hidden-canvas" width="400" height="300"></canvas>
+            </div>
+            <div class="controls">
+                <label>Brightness: <input type="range" id="bright" min="0" max="200" value="0"
+                        oninput="updateImage()"></label><br>
+                <label>Contrast: <input type="range" id="cont" min="0" max="200" value="100"
+                        oninput="updateImage()"></label>
+            </div>
+            <p id="img-status" style="color: yellow;"></p>
+        </div>
+
+        <!-- Puzzle 5: Shredded Document -->
+        <div class="doc-puzzle">
+            <h3>Recovered Letter [FRAGMENTED]</h3>
+            <p>Drag scraps to reassemble.</p>
+            <div id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <!-- Scraps -->
+                <div class="scrap" id="scrap1" draggable="true" ondragstart="dragStart(event)"
+                    style="top: 10px; left: 10px;">
+                    "We can't control them... The Guardians..."
+                </div>
+                <div class="scrap" id="scrap2" draggable="true" ondragstart="dragStart(event)"
+                    style="top: 50px; left: 200px;">
+                    "Project Chimera was a mistake... They are eating..."
+                </div>
+                <div class="scrap" id="scrap3" draggable="true" ondragstart="dragStart(event)"
+                    style="top: 150px; left: 50px;">
+                    "IP: ../systems/systems.html... PASSWORD PART 1: ALPH-X1"
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Puzzle (New Addition) -->
+        <div class="terminal-box"
+            style="margin-top: 30px; border: 1px solid #4cd964; padding: 10px; background: #000; font-family: monospace;">
+            <h3>SECURE TERMINAL ACCESS</h3>
+            <p>type 'help' for command list</p>
+            <div id="terminal-output" style="height: 150px; overflow-y: auto; color: #4cd964; margin-bottom: 10px;">
+                > CONNECTION ESTABLISHED...<br>
+            </div>
+            <input type="text" id="term-input"
+                style="width: 100%; background: #000; color: #4cd964; border: none; outline: none; font-family: monospace;"
+                placeholder=">> ENTER COMMAND">
+        </div>
+
+    </div>
+</body>
+
+</html>
