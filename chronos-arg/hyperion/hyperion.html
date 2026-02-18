@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPERION DEFENSE | GLOBAL SECURITY</title>
+    <style>
+        body {
+            background-color: #001a33;
+            color: #00ccff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #000d1a;
+            border-bottom: 3px solid #00ccff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(0, 26, 51, 0.8);
+            border: 1px solid #004d80;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 204, 255, 0.1);
+        }
+
+        .card:hover {
+            border-color: #00ccff;
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.3);
+        }
+
+        button {
+            background: #00ccff;
+            color: #001a33;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #66e0ff;
+        }
+
+        .locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Hex Puzzle Styles */
+        #hex-grid {
+            font-family: monospace;
+            letter-spacing: 5px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>HYPERION DEFENSE SYSTEMS</h1>
+        <div>STATUS: <span style="color:#00ccff">ACTIVE</span></div>
+    </header>
+
+    <div class="container">
+        <div style="background: #001122; padding: 15px; border-left: 4px solid #00ccff; margin-bottom: 30px;">
+            <h3>CONTRACTOR NOTICE</h3>
+            <p>Chronos Systems has requested a firewall audit. All external contractors must verify clearance codes
+                before accessing the Neural Net.</p>
+        </div>
+
+        <div class="grid">
+            <!-- Puzzle 14: Hex Decryption -->
+            <div class="card">
+                <h2>FIREWALL GATE A</h2>
+                <p>Decrypt the traffic to authorize connection.</p>
+                <div id="hex-grid">4F 50 45 4E</div>
+                <input type="text" id="hex-input" placeholder="ENTER TEXT TRANSLATION"
+                    style="width: 90%; padding: 10px; background: #000; color: #00ccff; border: 1px solid #004d80;">
+                <button onclick="checkHex()">LIFT FIREWALL</button>
+                <p id="hex-status"></p>
+            </div>
+
+            <!-- Puzzle 15: Nodes (Locked initially) -->
+            <div class="card" id="node-card"> <!-- Locked State controlled by JS -->
+                <h2>NEURAL NET ROUTING</h2>
+                <div id="overlay-lock"
+                    style="position:absolute; background:rgba(0,0,0,0.8); width:100%; height:100%; display:flex; justify-content:center; align-items:center; color:red; font-weight:bold; z-index:10;">
+                    LOCKED - GATE A REQUIRED</div>
+
+                <p>Connect the nodes to stabilize the uplink.</p>
+                <canvas id="node-canvas" width="400" height="300"
+                    style="background: #000; border: 1px solid #00ccff; cursor: crosshair;"></canvas>
+                <p id="node-status">Links Active: 0/3</p>
+                <button id="node-btn" disabled>ESTABLISH LINK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Puzzle 14: Hex
+        function checkHex() {
+            const val = document.getElementById('hex-input').value.trim().toUpperCase();
+            // 4F 50 45 4E -> OPEN
+            if (val === 'OPEN') {
+                document.getElementById('hex-status').innerText = "ACCESS GRANTED.";
+                document.getElementById('hex-status').style.color = "#00ccff";
+
+                // Unlock Puzzle 15
+                document.getElementById('overlay-lock').style.display = 'none';
+                initNodes();
+            } else {
+                document.getElementById('hex-status').innerText = "DECRYPTION FAILED.";
+                document.getElementById('hex-status').style.color = "red";
+            }
+        }
+
+        // Puzzle 15: Node Connection (Simplified logic for now)
+        let nodes = [
+            { x: 50, y: 50, connected: false },
+            { x: 350, y: 50, connected: false },
+            { x: 200, y: 250, connected: false }
+        ];
+        let activeLinks = 0;
+
+        function initNodes() {
+            const canvas = document.getElementById('node-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Draw function
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = '#00ccff';
+                ctx.lineWidth = 2;
+
+                // Nodes
+                nodes.forEach(n => {
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 10, 0, Math.PI * 2);
+                    ctx.fillStyle = n.connected ? '#00ccff' : '#00334d';
+                    ctx.fill();
+                    ctx.stroke();
+                });
+            }
+
+            draw();
+
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Check click on nodes
+                nodes.forEach(n => {
+                    if (Math.hypot(n.x - x, n.y - y) < 15) {
+                        n.connected = !n.connected;
+                        draw();
+                        checkWin();
+                    }
+                });
+            });
+
+            function checkWin() {
+                const allConnected = nodes.every(n => n.connected);
+                document.getElementById('node-status').innerText = `Nodes Active: ${nodes.filter(n => n.connected).length}/3`;
+
+                if (allConnected) {
+                    document.getElementById('node-status').innerText += " - STABLE";
+                    // Reveal Secret Code for Systems
+                    alert("SYSTEM ALERT: HYPERION OVERRIDE CHIP GENERATED: [ HYP-88-SECure ]");
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

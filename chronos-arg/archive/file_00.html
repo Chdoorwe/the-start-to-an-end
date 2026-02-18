@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCHIVE-00 | Chronos History</title>
+    <style>
+        body {
+            background: #f0f0f0;
+            color: #333;
+            font-family: serif;
+            margin: 40px;
+        }
+
+        .document {
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .redacted {
+            background: #000;
+            color: #000;
+            user-select: none;
+        }
+
+        .redacted:hover {
+            background: #333;
+            color: #fff;
+            cursor: help;
+        }
+
+        /* Puzzle 16: Cipher Wheel */
+        #cipher-box {
+            margin-top: 40px;
+            border: 2px dashed #999;
+            padding: 20px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1.2em;
+            width: 60%;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="document">
+        <h1>PROJECT: GENESIS (YEAR 2042)</h1>
+        <p><strong>CLASSIFIED: LEVEL 5</strong></p>
+
+        <p>The initial tests on <span class="redacted" title="Subject 01">Subject 01</span> proved difficult. The
+            integration of <span class="redacted" title="Artificial Intelligence">AI</span> into the biological cortex
+            resulted in 98% rejection rate.</p>
+
+        <p>However, the breakthrough came when we introduced the <span class="redacted" title="Chronos Serum">Serum
+                A-9</span>. It stabilized the connection, allowing for direct neural uplink to the mainframe.</p>
+
+        <hr>
+
+        <h3>ENCRYPTED FOOTNOTE:</h3>
+        <p>To access the full personnel list, solve the shift cipher below. (Shift +3)</p>
+        <p style="font-family: monospace; font-size: 1.5em;">MDQH = ?</p>
+
+        <div id="cipher-box">
+            <p>ENTER DECRYPTED NAME:</p>
+            <input type="text" id="cipher-input" placeholder="NAME">
+            <button onclick="checkCipher()">UNLOCK LIST</button>
+            <p id="cipher-msg"></p>
+        </div>
+
+        <div id="hidden-list" style="display:none; margin-top: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
+            <h3>PERSONNEL LIST [UNLOCKED]</h3>
+            <ul>
+                <li>Director V. Kallas</li>
+                <li>Dr. A. Turing (Clone)</li>
+                <li><strong>Security Chief: </strong> Access Code for Hyperion: <span style="color:red">4F 50 45
+                        4E</span> (Hex)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function checkCipher() {
+            // ZLQD -> Shift -3 -> WINA
+            // WAIT. Z(26) - 3 = W(23). L(12)-3=I(9). Q(17)-3=N(14). D(4)-3=A(1). -> WINA? No.
+            // Let's try Shift +3 on plaintext = ciphertext.
+            // A -> D. 
+            // So to decrypt ZLQD, we go back 3. 
+            // Z->W, L->I, Q->N, D->A. "WINA"? No.
+            // Maybe it's not +3. "CAESAR"? C->F, A->D...
+            // Let's make the answer "JANE" (Doe).
+            // J(10)+3 = M. A(1)+3 = D. N(14)+3 = Q. E(5)+3 = H. 
+            // Cipher: MDQH.
+            // Let's update the HTML text above to MDQH.
+
+            const val = document.getElementById('cipher-input').value.trim().toUpperCase();
+            if (val === 'JANE') {
+                document.getElementById('hidden-list').style.display = 'block';
+                document.getElementById('cipher-msg').innerText = "ACCESS GRANTED.";
+                document.getElementById('cipher-msg').style.color = "green";
+            } else {
+                document.getElementById('cipher-msg').innerText = "INCORRECT.";
+                document.getElementById('cipher-msg').style.color = "red";
+            }
+        }
+    </script>
+</body>
+
+</html>

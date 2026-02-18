@@ -1,3 +1,89 @@
+// SIMON GAME (handshake)
+let simonSeq = [];
+let userSeq = [];
+let round = 0;
+const maxRounds = 3;
+let canClick = false;
+
+function startSimon() {
+    simonSeq = [];
+    round = 0;
+    nextRound();
+}
+
+function nextRound() {
+    userSeq = [];
+    round++;
+    document.getElementById('simon-status').innerText = `SEQUENCE ${round}/${maxRounds}`;
+    
+    // Add new step
+    simonSeq.push(Math.floor(Math.random() * 4) + 1);
+    
+    playSequence();
+}
+
+function playSequence() {
+    canClick = false;
+    let i = 0;
+    const interval = setInterval(() => {
+        if (i >= simonSeq.length) {
+            clearInterval(interval);
+            canClick = true;
+            return;
+        }
+        flashBtn(simonSeq[i]);
+        i++;
+    }, 800);
+}
+
+function flashBtn(id) {
+    const btn = document.getElementById(`simon-${id}`);
+    btn.classList.add('active');
+    setTimeout(() => {
+        btn.classList.remove('active');
+    }, 400);
+}
+
+// User Input
+document.querySelectorAll('.simon-btn').forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        if(!canClick) return;
+        
+        const id = index + 1; // 1-based
+        flashBtn(id);
+        userSeq.push(id);
+        
+        // Check correctness immediately
+        if (userSeq[userSeq.length-1] !== simonSeq[userSeq.length-1]) {
+            document.getElementById('simon-status').innerText = "CALIBRATION FAILED. RETRY.";
+            document.getElementById('simon-status').style.color = "red";
+            simonSeq = [];
+            canClick = false;
+            return;
+        }
+        
+        // Round Complete?
+        if (userSeq.length === simonSeq.length) {
+            canClick = false;
+            if (round === maxRounds) {
+                // WIN
+                document.getElementById('simon-status').innerText = "HANDSHAKE VERIFIED.";
+                document.getElementById('simon-status').style.color = "#0f0";
+                setTimeout(unlockPower, 1000);
+            } else {
+                setTimeout(nextRound, 1000);
+            }
+        }
+    });
+});
+
+function unlockPower() {
+    document.getElementById('simon-module').style.display = 'none';
+    const power = document.getElementById('power-module');
+    power.style.opacity = '1';
+    power.style.pointerEvents = 'all';
+}
+
 function attemptLogin() {
     const user = document.getElementById('sys-user').value; // Puzzle 8 answer: ALPH-X1
     const pass = document.getElementById('sys-pass').value; // Puzzle 6 answer: OMEG-A9

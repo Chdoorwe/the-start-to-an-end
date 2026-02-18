@@ -38,8 +38,22 @@
             </div>
 
             <!-- Puzzle 8: Power Routing (Simplified) -->
+            <!-- Puzzle 7.5: Security Handshake (Simon Game) -->
+            <div class="module" id="simon-module">
+                <h2>SECURITY HANDSHAKE</h2>
+                <p>PATTERN VERIFICATION REQUIRED</p>
+                <div id="simon-game" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 200px; margin: 0 auto;">
+                    <button class="simon-btn" id="simon-1" style="height: 80px; background: #500; border: 1px solid red;"></button>
+                    <button class="simon-btn" id="simon-2" style="height: 80px; background: #550; border: 1px solid yellow;"></button>
+                    <button class="simon-btn" id="simon-3" style="height: 80px; background: #005; border: 1px solid blue;"></button>
+                    <button class="simon-btn" id="simon-4" style="height: 80px; background: #050; border: 1px solid green;"></button>
+                </div>
+                <p id="simon-status" style="margin-top:10px;">STANDBY...</p>
+                <button onclick="startSimon()" style="width: 100%;">INITIATE SEQUENCE</button>
+            </div>
+
             <!-- Puzzle 8: Power Routing -->
-            <div class="module">
+            <div class="module" id="power-module" style="opacity: 0.3; pointer-events: none;">
                 <h2>POWER GRID STATUS</h2>
                 <p>MAIN REACTOR: <span style="color:#0f0">ONLINE</span></p>
                 <div style="margin: 10px 0;">

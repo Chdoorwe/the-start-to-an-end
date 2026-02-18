@@ -86,3 +86,17 @@ button:hover {
     font-size: 2em;
     text-align: center;
 }
+
+/* Simon Game */
+.simon-btn {
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.simon-btn.active {
+    filter: brightness(2.5);
+    box-shadow: 0 0 20px currentColor;
+}
+#simon-1.active { background: #f00 !important; box-shadow: 0 0 20px red; }
+#simon-2.active { background: #ff0 !important; box-shadow: 0 0 20px yellow; }
+#simon-3.active { background: #00f !important; box-shadow: 0 0 20px blue; }
+#simon-4.active { background: #0f0 !important; box-shadow: 0 0 20px green; }
